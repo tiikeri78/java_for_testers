@@ -9,23 +9,26 @@ public class PointTests {
     //Позитивный тест
     public void testDistance(){
 
-        Point p = new Point(5, 5, 2, 1);
-        AssertJUnit.assertEquals(p.distance(), 5.0);
+        Point p1 = new Point(5, 5);
+        Point p2 = new Point(2, 1);
+        AssertJUnit.assertEquals(p1.distance(p2), 5.0);
     }
 
     @Test
     //Тест на "0"
     public void testDistanceNull(){
 
-        Point p = new Point(0, 0, 0, 0);
-        AssertJUnit.assertEquals(p.distance(), 0.0);
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(0, 0);
+        AssertJUnit.assertEquals(p1.distance(p2), 0.0);
     }
 
     @Test
     //Негативный тест
     public void testDistanceNegative(){
 
-        Point p = new Point(1, 1, 0, 0);
-        assert(p.distance()!= 2.0);
+        Point p1 = new Point(0, 3);
+        Point p2 = new Point(-1.9, 11);
+        assert(p1.distance(p2)!= 2.0);
     }
 }
