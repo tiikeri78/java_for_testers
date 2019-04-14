@@ -1,6 +1,6 @@
 package my.test.sandbox;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.testng.AssertJUnit;
 
 public class PointTests {
