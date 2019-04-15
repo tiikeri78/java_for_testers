@@ -30,7 +30,7 @@ public class AddNewContactTests {
   }
 
   @Test
-  public void testAddNewContactTests() throws Exception {
+  public void testAddNewContact() throws Exception {
     gotoNewContactForm();
     addNewContact(new ContactData("Zelda", "Phrankenshtein", "djaljdLJLANV", "+193029303", "HOME87@mail.ry"));
     submit();
