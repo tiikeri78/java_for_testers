@@ -6,10 +6,10 @@ public class AddNewContactTests extends TestBase{
 
   @Test
   public void testAddNewContact() throws Exception {
-    gotoNewContactForm();
-    addNewContact(new ContactData("Zelda", "Smith", "Nevada", "+195432567", "krasotka@mail.ry"));
-    submitAddNewContact();
-    logout();
+    app.gotoNewContactForm();
+    app.addNewContact(new ContactData("Zelda", "Smith", "Nevada", "+195432567", "krasotka@mail.ry"));
+    app.submitAddNewContact();
+    app.logout();
   }
 
 }
