@@ -1,8 +1,9 @@
-package my.test.addressbook;
+package my.test.addressbook.test;
 
+import my.test.addressbook.model.ContactData;
 import org.testng.annotations.Test;
 
-public class AddNewContactTests extends TestBase{
+public class AddNewContactTests extends TestBase {
 
   @Test
   public void testAddNewContact() throws Exception {
