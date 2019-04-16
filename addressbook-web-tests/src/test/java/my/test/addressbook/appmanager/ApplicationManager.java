@@ -11,13 +11,14 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
 
     public WebDriver wd;
-
+    private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
 
     public void init() {
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/");
         groupHelper = new GroupHelper(wd);
+        navigationHelper = new NavigationHelper(wd);
         login("admin", "secret");
     }
 
@@ -33,10 +34,6 @@ public class ApplicationManager {
 
     public void logout() {
         wd.findElement(By.linkText("Logout")).click();
-    }
-
-    public void gotoGroupPage() {
-        wd.findElement(By.linkText("groups")).click();
     }
 
     public void stop() {
@@ -83,11 +80,11 @@ public class ApplicationManager {
         wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
     }
 
-    public void gotoNewContactForm() {
-        wd.findElement(By.linkText("add new")).click();
-    }
-
     public GroupHelper getGroupHelper() {
         return groupHelper;
+    }
+
+    public NavigationHelper getNavigationHelper() {
+        return navigationHelper;
     }
 }
