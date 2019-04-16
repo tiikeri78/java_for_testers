@@ -1,7 +1,7 @@
 package my.test.sandbox;
 
-import org.junit.Test;
 import org.testng.AssertJUnit;
+import org.testng.annotations.Test;
 
 public class PointTests {
 
@@ -29,6 +29,6 @@ public class PointTests {
 
         Point p1 = new Point(0, 3);
         Point p2 = new Point(-1.9, 11);
-        assert(p1.distance(p2)!= 2.0);
+        assert(p1.distance(p2)!= 4.0);
     }
 }
