@@ -1,4 +1,4 @@
-package my.test.addressbook.model;
+package my.test.addressbook;
 
 public class GroupData {
     private final String name;

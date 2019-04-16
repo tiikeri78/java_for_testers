@@ -1,6 +1,5 @@
-package my.test.addressbook.test;
+package my.test.addressbook;
 
-import my.test.addressbook.appmanager.ApplicationManager;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

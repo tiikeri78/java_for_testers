@@ -1,7 +1,5 @@
-package my.test.addressbook.appmanager;
+package my.test.addressbook;
 
-import my.test.addressbook.model.ContactData;
-import my.test.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
@@ -10,9 +8,9 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-    public WebDriver wd;
+    protected WebDriver wd;
 
-    public void init() {
+    protected void init() {
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/");
         login("admin", "secret");
@@ -28,19 +26,19 @@ public class ApplicationManager {
         wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
 
-    public void logout() {
+    protected void logout() {
         wd.findElement(By.linkText("Logout")).click();
     }
 
-    public void returnToGroupPage() {
+    protected void returnToGroupPage() {
         wd.findElement(By.linkText("group page")).click();
     }
 
-    public void submitGroupCreation() {
+    protected void submitGroupCreation() {
         wd.findElement(By.name("submit")).click();
     }
 
-    public void fillGroupForm(GroupData groupData) {
+    protected void fillGroupForm(GroupData groupData) {
         wd.findElement(By.name("group_name")).click();
         wd.findElement(By.name("group_name")).clear();
         wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
@@ -52,19 +50,19 @@ public class ApplicationManager {
         wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
     }
 
-    public void initGroupCreation() {
+    protected void initGroupCreation() {
         wd.findElement(By.name("new")).click();
     }
 
-    public void gotoGroupPage() {
+    protected void gotoGroupPage() {
         wd.findElement(By.linkText("groups")).click();
     }
 
-    public void stop() {
+    protected void stop() {
         wd.quit();
     }
 
-    public boolean isElementPresent(By by) {
+    private boolean isElementPresent(By by) {
         try {
             wd.findElement(by);
             return true;
@@ -82,7 +80,7 @@ public class ApplicationManager {
         }
     }
 
-    public void addNewContact(ContactData contactData) {
+    protected void addNewContact(ContactData contactData) {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
         wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
@@ -100,11 +98,11 @@ public class ApplicationManager {
         wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
     }
 
-    public void submitAddNewContact() {
+    protected void submitAddNewContact() {
         wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
     }
 
-    public void gotoNewContactForm() {
+    protected void gotoNewContactForm() {
         wd.findElement(By.linkText("add new")).click();
     }
 }

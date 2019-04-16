@@ -1,9 +1,8 @@
-package my.test.addressbook.test;
+package my.test.addressbook;
 
-import my.test.addressbook.model.GroupData;
 import org.testng.annotations.Test;
 
-public class CreateOfGroupTests extends TestBase {
+public class CreateOfGroupTests extends TestBase{
 
   @Test
   public void testCreateOfGroup() throws Exception {
