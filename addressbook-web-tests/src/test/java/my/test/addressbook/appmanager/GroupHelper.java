@@ -27,4 +27,20 @@ public class GroupHelper extends BaseHelper{
     public void initGroupCreation() {
         click(By.name("new"));
     }
+
+    public void selectGroup() {
+        click(By.name("selected[]"));
+    }
+
+    public void deleteGroup() {
+        click(By.name("delete"));
+    }
+
+    public void editGroup() {
+        click(By.name("edit"));
+    }
+
+    public void updateGroup() {
+        click(By.name("update"));
+    }
 }

@@ -4,7 +4,7 @@ import my.test.addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class ContactHelper extends BaseHelper {
+public abstract class ContactHelper extends BaseHelper {
 
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -20,5 +20,19 @@ public class ContactHelper extends BaseHelper {
 
     public void submitAddNewContact() {
         click(By.xpath("(//input[@name='submit'])[2]"));
+    }
+
+    public void selectContact() {
+        click(By.name("selected[]"));
+    }
+
+    public void deleteContact() {
+        click (By.xpath("//input[@value='Delete']"));
+    }
+
+    public abstract void ChooseOkOnNextConfirmation();
+
+    public void submitDeleteContact() {
+        click(By.cssSelector("OK"));
     }
 }

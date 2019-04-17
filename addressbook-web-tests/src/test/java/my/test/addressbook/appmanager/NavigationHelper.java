@@ -13,6 +13,8 @@ public class NavigationHelper extends BaseHelper{
         click(By.linkText("groups"));
     }
 
+    public void gotoHome() {click(By.linkText("home"));}
+
     public void gotoNewContactForm() {
         click(By.linkText("add new"));
     }
