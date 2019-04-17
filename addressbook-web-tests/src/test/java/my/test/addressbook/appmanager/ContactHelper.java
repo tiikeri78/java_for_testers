@@ -4,6 +4,8 @@ import my.test.addressbook.model.ContactData;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+
 import static org.testng.Assert.assertTrue;
 
 public class ContactHelper extends BaseHelper {
@@ -56,5 +58,15 @@ public class ContactHelper extends BaseHelper {
         } finally {
             acceptNextAlert = true;
         }
+    }
+
+    public void selectGroup() {
+        click(By.name("to_group"));
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText("Test1");
+        click(By.xpath("(//option[@value='21'])[2]"));
+    }
+
+    public void addToGroup() {
+        click(By.name("add"));
     }
 }
