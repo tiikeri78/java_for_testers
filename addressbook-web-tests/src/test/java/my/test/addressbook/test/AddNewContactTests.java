@@ -10,7 +10,7 @@ public class AddNewContactTests extends TestBase {
     app.getNavigationHelper().gotoNewContactForm();
     app.getContactHelper().addNewContact(new ContactData("Zelda", "Smith", "Nevada", "+195432567", "krasotka@mail.ry"));
     app.getContactHelper().submitAddNewContact();
-    app.logout();
+    app.getSessionHelper().logout();
   }
 
 }

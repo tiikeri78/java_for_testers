@@ -12,7 +12,7 @@ public class CreateOfGroupTests extends TestBase {
     app.getGroupHelper().fillGroupForm(new GroupData("Test1", "Test", "Testers1"));
     app.getGroupHelper().submitGroupCreation();
     app.getGroupHelper().returnToGroupPage();
-    app.logout();
+    app.getSessionHelper().logout();
   }
 
 }
