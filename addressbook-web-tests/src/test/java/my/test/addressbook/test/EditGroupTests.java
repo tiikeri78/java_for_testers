@@ -13,6 +13,5 @@ public class EditGroupTests extends TestBase {
         app.getGroupHelper().fillGroupForm(new GroupData("Test1", "Test", "Testers1"));
         app.getGroupHelper().updateGroup();
         app.getNavigationHelper().gotoGroupPage();
-        app.getSessionHelper().logout();
     }
 }

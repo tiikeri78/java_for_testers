@@ -15,7 +15,7 @@ public class SessionHelper extends BaseHelper {
         click(By.xpath("//input[@value='Login']"));
     }
 
-    public void logout() {
+    protected void logout() {
         click(By.linkText("Logout"));
     }
 }
