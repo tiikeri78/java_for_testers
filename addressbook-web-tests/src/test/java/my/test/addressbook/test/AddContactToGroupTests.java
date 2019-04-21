@@ -2,7 +2,7 @@ package my.test.addressbook.test;
 
 import org.testng.annotations.Test;
 
-public class AddContactToGroup extends TestBase{
+public class AddContactToGroupTests extends TestBase{
 
   @Test
   public void testAddContactToGroup() throws Exception {

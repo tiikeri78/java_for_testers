@@ -5,6 +5,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import static org.testng.Assert.assertTrue;
 
@@ -15,12 +16,22 @@ public class ContactHelper extends BaseHelper {
         super(wd);
     }
 
-    public void addNewContact(ContactData contactData) {
+    public void initAddContact(){
+        click(By.linkText("add new"));
+    }
+
+    public void fillContact(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("address"), contactData.getAddress());
         type(By.name("mobile"), contactData.getMobileNumber());
         type(By.name("email"), contactData.getEmail());
+
+        if (creation){
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        } else {
+           Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void submitAddNewContact() {
@@ -31,8 +42,8 @@ public class ContactHelper extends BaseHelper {
         click(By.name("selected[]"));
     }
 
-    public void editContact() {
-        click(By.xpath("(//img[@alt='Edit'])[4]"));
+    public void editContact(){
+        click(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img"));
     }
 
     public void updateContact() {
