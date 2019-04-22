@@ -8,7 +8,6 @@ public class EditContactTests extends TestBase{
   @Test
   public void testEditContactTests() throws Exception {
     app.getNavigationHelper().gotoHome();
-    app.getContactHelper().selectContact();
     app.getContactHelper().editContact();
     app.getContactHelper().fillContact(new ContactData("Zelda", "Ivanov", "Santa-Barbara", "09988",
             "krasotka@mail.ry", null), false);

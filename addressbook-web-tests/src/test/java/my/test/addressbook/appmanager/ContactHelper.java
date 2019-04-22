@@ -34,6 +34,10 @@ public class ContactHelper extends BaseHelper {
         }
     }
 
+    public void selectGroup(ContactData group) {
+         new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getGroup());
+    }
+
     public void submitAddNewContact() {
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
@@ -43,7 +47,7 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void editContact(){
-        click(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img"));
+        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
     public void updateContact() {
@@ -69,12 +73,6 @@ public class ContactHelper extends BaseHelper {
         } finally {
             acceptNextAlert = true;
         }
-    }
-
-    public void selectGroup() {
-        click(By.name("to_group"));
-        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText("Test1");
-        click(By.xpath("(//option[@value='21'])[2]"));
     }
 
     public void addToGroup() {
