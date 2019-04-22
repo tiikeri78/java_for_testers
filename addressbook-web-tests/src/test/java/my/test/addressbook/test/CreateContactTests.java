@@ -12,10 +12,8 @@ public class CreateContactTests extends TestBase {
     if (! app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().createGroup(new GroupData("Test1", "testers", null));
     }
-    app.getContactHelper().initAddContact();
-    app.getContactHelper().fillContact(new ContactData("Zelda", "Smith", "Nevada", "+195432567", "krasotka@mail.ry",
+    app.getContactHelper().createContact(new ContactData("Zelda", "Smith", "Nevada", "+195432567", "krasotka@mail.ry",
             "Test1"),true);
-    app.getContactHelper().submitAddNewContact();
     app.getNavigationHelper().gotoHome();
   }
 }

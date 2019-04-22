@@ -78,4 +78,14 @@ public class ContactHelper extends BaseHelper {
     public void addToGroup() {
         click(By.name("add"));
     }
+
+    public void createContact(ContactData contact, boolean creation) {
+        initAddContact();
+        fillContact(contact, creation);
+        submitAddNewContact();
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
+    }
 }
