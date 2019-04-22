@@ -8,9 +8,12 @@ public class EditGroupTests extends TestBase {
     @Test
     public void testEditGroup() throws Exception {
         app.getNavigationHelper().gotoGroupPage();
+        if (! app.getGroupHelper().isThereAGroup()){
+            app.getGroupHelper().createGroup(new GroupData("Test1", "testers", null));
+        }
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().editGroup();
-        app.getGroupHelper().fillGroupForm(new GroupData("Workers", null, "Testers1"));
+        app.getGroupHelper().fillGroupForm(new GroupData("Workers", "work", "Testers1"));
         app.getGroupHelper().updateGroup();
         app.getNavigationHelper().gotoGroupPage();
     }
