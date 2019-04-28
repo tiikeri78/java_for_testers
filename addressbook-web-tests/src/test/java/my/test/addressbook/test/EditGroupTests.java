@@ -10,15 +10,15 @@ import java.util.List;
 public class EditGroupTests extends TestBase {
 
     @Test
-    public void testEditGroup() throws Exception {
+    public void testEditGroup() {
         app.getNavigationHelper().gotoGroupPage();
         if (! app.getGroupHelper().isThereAGroup()){
-            app.getGroupHelper().createGroup(new GroupData("Test1", "testers", null));
+            app.getGroupHelper().createGroup(new GroupData("Admin", "testers", null));
         }
         List<GroupData> before = app.getGroupHelper().getGroupList();
         app.getGroupHelper().selectGroup(before.size() - 1);
         app.getGroupHelper().editGroup();
-        GroupData group = new GroupData(before.get(before.size()-1).getId(),"Workers", "work", "Testers1");
+        GroupData group = new GroupData(before.get(before.size()-1).getId(),"Admin", "work", "Testers1");
         app.getGroupHelper().fillGroupForm(group);
         app.getGroupHelper().updateGroup();
         app.getNavigationHelper().gotoGroupPage();
