@@ -19,22 +19,22 @@ public class GroupData {
         this.footer = footer;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public GroupData(int id, String name, String header, String footer) {
         this.id = id;
         this.name = name;
         this.header = header;
         this.footer = footer;
     }
-
     public String getName() {
         return name;
     }
+
     public String getHeader() {
         return header;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFooter() {
