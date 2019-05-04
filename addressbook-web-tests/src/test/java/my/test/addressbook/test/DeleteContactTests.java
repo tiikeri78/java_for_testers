@@ -21,13 +21,10 @@ public class DeleteContactTests extends TestBase{
     }
     app.getNavigationHelper().gotoHome();
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContact(before-1);
+    app.getContactHelper().selectContact(before - 1);
     app.getContactHelper().deleteContact();
     app.getNavigationHelper().gotoHome();
-    int after;
-    if (! app.getContactHelper().isThereAContact()) {
-      after = 0;
-    } else {after = app.getContactHelper().getContactCount();}
+    int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before - 1);
   }
 }

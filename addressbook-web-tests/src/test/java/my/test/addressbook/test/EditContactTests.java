@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class EditContactTests extends TestBase{
 
   @Test
-  public void editContactTests() throws Exception {
+  public void editContactTests() {
     app.getNavigationHelper().gotoHome();
       if (! app.getContactHelper().isThereAContact()){
       app.getNavigationHelper().gotoGroupPage();
