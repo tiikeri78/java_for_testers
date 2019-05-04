@@ -2,12 +2,13 @@ package my.test.addressbook.test;
 
 import my.test.addressbook.model.ContactData;
 import my.test.addressbook.model.GroupData;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class DeleteContactTests extends TestBase{
 
   @Test
-  public void testDeleteContactTests() throws Exception {
+  public void testDeleteContactTests() {
     app.getNavigationHelper().gotoHome();
     if (! app.getContactHelper().isThereAContact()){
       app.getNavigationHelper().gotoGroupPage();
@@ -19,7 +20,15 @@ public class DeleteContactTests extends TestBase{
               "Test1"),true);
     }
     app.getNavigationHelper().gotoHome();
+    int before = app.getContactHelper().getContactCount();
     app.getContactHelper().selectContact();
     app.getContactHelper().deleteContact();
+    app.getNavigationHelper().gotoHome();
+    if (! app.getContactHelper().isThereAContact()){
+      int after = 0;
+      Assert.assertEquals(after, before - 1);
+    }
+    int after = app.getContactHelper().getContactCount();
+    Assert.assertEquals(after, before - 1);
   }
 }
