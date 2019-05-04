@@ -8,14 +8,14 @@ import org.testng.annotations.Test;
 public class CreateContactTests extends TestBase {
 
   @Test
-  public void testAddNewContact() {
+  public void createContactTests() {
     app.getNavigationHelper().gotoGroupPage();
     if (!app.getGroupHelper().isThereAGroup()) {
       app.getGroupHelper().createGroup(new GroupData("Test1", "testers", null));
     }
       app.getNavigationHelper().gotoHome();
       int before = app.getContactHelper().getContactCount();
-      app.getContactHelper().createContact(new ContactData("Ernest", "Oreiro", "Nevada", "+195432567", "0987@mail.ry",
+      app.getContactHelper().createContact(new ContactData("Edward", "Gusman", "Luna", "+19543898090", "098097@mail.ry",
               "Test1"), true);
       app.getNavigationHelper().gotoHome();
       int after = app.getContactHelper().getContactCount();

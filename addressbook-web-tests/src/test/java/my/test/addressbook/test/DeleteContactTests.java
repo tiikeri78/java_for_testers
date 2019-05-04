@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class DeleteContactTests extends TestBase{
 
   @Test
-  public void testDeleteContactTests() {
+  public void deleteContactTests() {
     app.getNavigationHelper().gotoHome();
     if (! app.getContactHelper().isThereAContact()){
       app.getNavigationHelper().gotoGroupPage();
@@ -21,14 +21,13 @@ public class DeleteContactTests extends TestBase{
     }
     app.getNavigationHelper().gotoHome();
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContact();
+    app.getContactHelper().selectContact(before-1);
     app.getContactHelper().deleteContact();
     app.getNavigationHelper().gotoHome();
-    if (! app.getContactHelper().isThereAContact()){
-      int after = 0;
-      Assert.assertEquals(after, before - 1);
-    }
-    int after = app.getContactHelper().getContactCount();
+    int after;
+    if (! app.getContactHelper().isThereAContact()) {
+      after = 0;
+    } else {after = app.getContactHelper().getContactCount();}
     Assert.assertEquals(after, before - 1);
   }
 }

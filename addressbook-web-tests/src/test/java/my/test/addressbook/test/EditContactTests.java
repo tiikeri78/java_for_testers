@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class EditContactTests extends TestBase{
 
   @Test
-  public void testEditContactTests() throws Exception {
+  public void editContactTests() throws Exception {
     app.getNavigationHelper().gotoHome();
       if (! app.getContactHelper().isThereAContact()){
       app.getNavigationHelper().gotoGroupPage();
@@ -21,7 +21,7 @@ public class EditContactTests extends TestBase{
     }
     app.getNavigationHelper().gotoHome();
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContact();
+    app.getContactHelper().selectContact(before - 1);
     app.getContactHelper().editContact();
     app.getContactHelper().fillContact(new ContactData("Zelda", "Ivanov", "Santa-Barbara", "09988",
             "krasotka@mail.ry", null), false);
