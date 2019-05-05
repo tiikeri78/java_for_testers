@@ -3,7 +3,7 @@ package my.test.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-    private final String id;
+    private int id;
     private final String firstname;
     private final String lastname;
     private final String address;
@@ -11,7 +11,7 @@ public class ContactData {
     private final String email;
     private String group;
 
-    public ContactData(String id, String firstname, String lastname, String address, String mobileNumber, String email, String group) {
+    public ContactData(int id, String firstname, String lastname, String address, String mobileNumber, String email, String group) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -22,7 +22,7 @@ public class ContactData {
     }
 
     public ContactData(String firstname, String lastname, String address, String mobileNumber, String email, String group) {
-        this.id = null;
+        this.id = 0;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -31,7 +31,11 @@ public class ContactData {
         this.group = group;
     }
 
-    public String getId() { return id; }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() { return id; }
 
     public String getFirstname() {
         return firstname;

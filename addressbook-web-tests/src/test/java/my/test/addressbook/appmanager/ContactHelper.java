@@ -109,7 +109,7 @@ public class ContactHelper extends BaseHelper {
             String firstname = columns.get(2).getText();
             String lastname = columns.get(1).getText();
             String address = columns.get(3).getText();
-            String id = element.findElement(By.tagName("input")).getAttribute("value");
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             ContactData contact = new ContactData(id, firstname, lastname, address, null, null, null);
             contacts.add(contact);
         }
