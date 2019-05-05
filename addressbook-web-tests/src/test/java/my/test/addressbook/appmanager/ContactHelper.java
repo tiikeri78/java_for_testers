@@ -4,8 +4,12 @@ import my.test.addressbook.model.ContactData;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
@@ -16,7 +20,7 @@ public class ContactHelper extends BaseHelper {
         super(wd);
     }
 
-    public void initAddContact(){
+    public void initAddContact() {
         click(By.linkText("add new"));
     }
 
@@ -27,15 +31,15 @@ public class ContactHelper extends BaseHelper {
         type(By.name("mobile"), contactData.getMobileNumber());
         type(By.name("email"), contactData.getEmail());
 
-        if (creation){
+        if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
         } else {
-          Assert.assertFalse(isElementPresent(By.name("new_group")));
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
     }
 
     public void selectGroup(ContactData group) {
-         new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getGroup());
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getGroup());
     }
 
     public void submitAddNewContact() {
@@ -46,7 +50,7 @@ public class ContactHelper extends BaseHelper {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void editContact(){
+    public void editContact() {
         click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
@@ -58,6 +62,10 @@ public class ContactHelper extends BaseHelper {
         acceptNextAlert = true;
         click(By.xpath("//input[@value='Delete']"));
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+    }
+
+    public WebElement getMessage() {
+        return wd.findElement(By.cssSelector(".msgbox"));
     }
 
     private String closeAlertAndGetItsText() {
@@ -91,5 +99,20 @@ public class ContactHelper extends BaseHelper {
 
     public int getContactCount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> lines = wd.findElements(By.xpath("//tr[@name='entry']"));
+        for (WebElement element : lines) {
+            List<WebElement> columns = element.findElements(By.tagName("td"));
+            String firstname = columns.get(2).getText();
+            String lastname = columns.get(1).getText();
+            String address = columns.get(3).getText();
+            String id = element.findElement(By.tagName("input")).getAttribute("value");
+            ContactData contact = new ContactData(id, firstname, lastname, address, null, null, null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }

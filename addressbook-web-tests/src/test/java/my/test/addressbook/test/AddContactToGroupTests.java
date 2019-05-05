@@ -5,6 +5,8 @@ import my.test.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class AddContactToGroupTests extends TestBase{
 
   @Test
@@ -14,12 +16,12 @@ public class AddContactToGroupTests extends TestBase{
       app.getGroupHelper().createGroup(new GroupData("Test1", "testers", null));
     }
     app.getNavigationHelper().gotoHome();
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContact(before - 1);
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().selectGroup(new ContactData(null, null, null, null, null, "Masters"));
     app.getContactHelper().addToGroup();
     app.getNavigationHelper().gotoHome();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before);
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size());
   }
 }
