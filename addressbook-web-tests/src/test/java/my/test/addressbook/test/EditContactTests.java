@@ -5,6 +5,7 @@ import my.test.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class EditContactTests extends TestBase{
@@ -25,11 +26,20 @@ public class EditContactTests extends TestBase{
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().editContact();
-    app.getContactHelper().fillContact(new ContactData("Zelda", "Ivanov", "Santa-Barbara", "09988",
-            "krasotka@mail.ry", null), false);
+    ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Ed", "Marvel", "Santa-Barbara", "+15609988",
+            "krasotka00@mail.ry", null);
+    app.getContactHelper().fillContact(contact, false);
     app.getContactHelper().updateContact();
+    app.getContactHelper().getMessage();
     app.getNavigationHelper().gotoHome();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
+
+    before.remove(before.size() - 1);
+    before.add(contact);
+    Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 }

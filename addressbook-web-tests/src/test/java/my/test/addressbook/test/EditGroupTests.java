@@ -23,7 +23,7 @@ public class EditGroupTests extends TestBase {
         app.getGroupHelper().updateGroup();
         app.getNavigationHelper().gotoGroupPage();
         List<GroupData> after = app.getGroupHelper().getGroupList();
-        Assert.assertEquals(after.size(), after.size());
+        Assert.assertEquals(before.size(), after.size());
 
         before.remove(before.size() - 1);
         before.add(group);

@@ -62,10 +62,7 @@ public class ContactData {
     @Override
     public String toString() {
         return "ContactData{" +
-                "id='" + id + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", address='" + address + '\'' +
+                "id=" + id +
                 '}';
     }
 
@@ -74,14 +71,11 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(firstname, that.firstname) &&
-                Objects.equals(lastname, that.lastname) &&
-                Objects.equals(address, that.address);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, address);
+        return Objects.hash(id);
     }
 }
