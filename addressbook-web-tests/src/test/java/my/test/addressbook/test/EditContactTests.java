@@ -5,7 +5,7 @@ import my.test.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 public class EditContactTests extends TestBase{
@@ -37,9 +37,6 @@ public class EditContactTests extends TestBase{
 
     before.remove(before.size() - 1);
     before.add(contact);
-    Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
   }
 }
