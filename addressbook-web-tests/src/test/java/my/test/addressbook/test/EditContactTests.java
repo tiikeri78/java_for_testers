@@ -5,7 +5,7 @@ import my.test.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 
 public class EditContactTests extends TestBase{
@@ -25,9 +25,9 @@ public class EditContactTests extends TestBase{
     app.getNavigationHelper().gotoHome();
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().selectContact(before.size() - 1);
-    app.getContactHelper().editContact();
-    ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Ed", "Marvel", "Santa-Barbara", "+15609988",
-            "krasotka00@mail.ry", null);
+    app.getContactHelper().editContact(before.size() - 1);
+    ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Sara", "Notka", "New", "+25609988",
+            "krasotka9800@mail.ry", null);
     app.getContactHelper().fillContact(contact, false);
     app.getContactHelper().updateContact();
     app.getContactHelper().getMessage();
@@ -37,6 +37,9 @@ public class EditContactTests extends TestBase{
 
     before.remove(before.size() - 1);
     before.add(contact);
-    Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
+      Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
+      before.sort(byId);
+      after.sort(byId);
+      Assert.assertEquals(before, after);
   }
 }
