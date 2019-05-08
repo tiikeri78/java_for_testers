@@ -13,7 +13,7 @@ public class DeleteGroupTests extends TestBase{
     public void deleteGroupTests() {
         app.getNavigationHelper().gotoGroupPage();
         if (! app.getGroupHelper().isThereAGroup()){
-            app.getGroupHelper().createGroup(new GroupData("Test1", "testers", null));
+            app.getGroupHelper().createGroup(new GroupData("Test1", "testers", "test"));
         }
         List<GroupData> before = app.getGroupHelper().getGroupList();
         app.getGroupHelper().selectGroup(before.size() - 1);

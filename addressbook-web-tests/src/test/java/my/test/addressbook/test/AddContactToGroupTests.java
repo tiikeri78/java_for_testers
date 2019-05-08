@@ -13,7 +13,7 @@ public class AddContactToGroupTests extends TestBase{
   public void addContactToGroupTests() {
     app.getNavigationHelper().gotoGroupPage();
     if (! app.getGroupHelper().isThereAGroup()){
-      app.getGroupHelper().createGroup(new GroupData("Test1", "testers", null));
+      app.getGroupHelper().createGroup(new GroupData("Test1", "testers", "t"));
     }
     app.getNavigationHelper().gotoHome();
     List<ContactData> before = app.getContactHelper().getContactList();
