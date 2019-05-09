@@ -11,6 +11,7 @@ import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
+import static my.test.addressbook.test.TestBase.app;
 import static org.testng.Assert.assertTrue;
 
 public class ContactHelper extends BaseHelper {
@@ -46,7 +47,7 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
 
-    public void selectContact(int index) {
+    public void select(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
@@ -58,10 +59,26 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath("(//input[@name='update'])[2]"));
     }
 
+    public void modify(int index, ContactData contact) {
+        select(index);
+        editContact(index);
+        fillContact(contact, false);
+        updateContact();
+        getMessage();
+        app.goTo().contactPage();
+    }
+
     public void deleteContact() {
         acceptNextAlert = true;
         click(By.xpath("//input[@value='Delete']"));
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+    }
+
+    public void delete(int index) {
+        select(index);
+        deleteContact();
+        getMessage();
+        app.goTo().contactPage();
     }
 
     public WebElement getMessage() {
@@ -87,7 +104,7 @@ public class ContactHelper extends BaseHelper {
         click(By.name("add"));
     }
 
-    public void createContact(ContactData contact, boolean creation) {
+    public void create(ContactData contact, boolean creation) {
         initAddContact();
         fillContact(contact, creation);
         submitAddNewContact();
@@ -101,7 +118,7 @@ public class ContactHelper extends BaseHelper {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> lines = wd.findElements(By.xpath("//tr[@name='entry']"));
         for (WebElement element : lines) {
@@ -112,8 +129,8 @@ public class ContactHelper extends BaseHelper {
             String email = columns.get(4).getText();
             String mobileNumber = columns.get(5).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            ContactData contact = new ContactData(id, firstname, lastname, address, mobileNumber, email, null);
-            contacts.add(contact);
+            contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withAddress(address)
+                    .withMobileNumber(mobileNumber).withEmail(email));
         }
         return contacts;
     }

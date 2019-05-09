@@ -13,22 +13,22 @@ public class CreateContactTests extends TestBase {
 
     @Test
     public void createContactTests() {
-        app.getNavigationHelper().gotoGroupPage();
-        if (!app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("Admin", "testers", "test"));
+        app.goTo().groupPage();
+        if (app.group().list().size() == 0) {
+            app.group().create(new GroupData().withName("Test1").withHeader("testers").withFooter("test"));
         }
-        app.getNavigationHelper().gotoHome();
-        List<ContactData> before = app.getContactHelper().getContactList();
-        ContactData contact = new ContactData("Ti", "Pin", "Lunapark", "+987954389876", "12396@mail.ry",
-                "Admin");
-        app.getContactHelper().createContact(contact, true);
-        app.getNavigationHelper().gotoHome();
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.goTo().contactPage();
+        List<ContactData> before = app.contact().list();
+        ContactData contact = new ContactData().withFirstname("Ti").withLastname("Pin").withAddress("Lunapark")
+                .withMobileNumber("+987954389876").withEmail("12396@mail.ry").withGroup("Test1");
+        app.contact().create(contact, true);
+        app.goTo().contactPage();
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() + 1);
 
         before.add(contact);
 
-        contact.setId(after.stream().max(Comparator.comparingInt(ContactData::getId)).get().getId());
+        contact.withId(after.stream().max(Comparator.comparingInt(ContactData::getId)).get().getId());
         Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
     }
 }

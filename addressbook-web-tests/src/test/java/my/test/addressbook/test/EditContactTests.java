@@ -3,6 +3,7 @@ package my.test.addressbook.test;
 import my.test.addressbook.model.ContactData;
 import my.test.addressbook.model.GroupData;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
@@ -10,32 +11,32 @@ import java.util.List;
 
 public class EditContactTests extends TestBase{
 
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().contactPage();
+    if (app.contact().list().size() == 0) {
+      app.goTo().groupPage();
+      if (app.group().list().size() == 0) {
+        app.group().create(new GroupData().withName("Test1").withHeader("testers").withFooter("t66"));
+      }
+      app.goTo().contactPage();
+      app.contact().create(new ContactData().withFirstname("Zelda").withLastname("Smith").withAddress("Nevada").withMobileNumber("+195432567")
+              .withEmail("krasotka@mail.ry").withGroup("Test1"), true);
+    }
+  }
+
   @Test
   public void editContactTests() {
-    app.getNavigationHelper().gotoHome();
-      if (! app.getContactHelper().isThereAContact()){
-      app.getNavigationHelper().gotoGroupPage();
-      if (! app.getGroupHelper().isThereAGroup()){
-        app.getGroupHelper().createGroup(new GroupData("Test1", "testers", null));
-      }
-      app.getNavigationHelper().gotoHome();
-      app.getContactHelper().createContact(new ContactData("Zelda", "Smith", "Nevada", "+195432567", "krasotka@mail.ry",
-              "Test1"),true);
-    }
-    app.getNavigationHelper().gotoHome();
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().selectContact(before.size() - 1);
-    app.getContactHelper().editContact(before.size() - 1);
-    ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Marat", "Notka", "New", "+2569988",
-            "m32@mail.ry", null);
-    app.getContactHelper().fillContact(contact, false);
-    app.getContactHelper().updateContact();
-    app.getContactHelper().getMessage();
-    app.getNavigationHelper().gotoHome();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.goTo().contactPage();
+    List<ContactData> before = app.contact().list();
+    int index = before.size()-1;
+    ContactData contact = new ContactData().withId(before.get(index).getId()).withFirstname("Marat").withLastname("Notka").withAddress("New")
+            .withMobileNumber("+2569988").withEmail("m32@mail.ry");
+    app.contact().modify(index, contact);
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size());
 
-    before.remove(before.size() - 1);
+    before.remove(index);
     before.add(contact);
       Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
       before.sort(byId);
