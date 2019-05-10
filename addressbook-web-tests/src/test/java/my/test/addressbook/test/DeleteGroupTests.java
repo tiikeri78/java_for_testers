@@ -21,7 +21,6 @@ public class DeleteGroupTests extends TestBase{
     public void deleteGroupTests() {
         Set<GroupData> before = app.group().set();
         GroupData deletedGroup = before.iterator().next();
-        int index = before.size() - 1;
         app.group().delete(deletedGroup);
         Set<GroupData> after = app.group().set();
         Assert.assertEquals(after.size(), before.size() - 1);
