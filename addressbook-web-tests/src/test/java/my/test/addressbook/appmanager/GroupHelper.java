@@ -40,8 +40,15 @@ public class GroupHelper extends BaseHelper {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
+    public void selectById(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
+    }
+
     public void deleteGroup() {
         click(By.name("delete"));
+    }
+
+    public void delete(GroupData deletedGroup) {
     }
 
     public void editGroup() {
@@ -108,8 +115,5 @@ public class GroupHelper extends BaseHelper {
             groups.add(new GroupData().withId(id).withName(name));
         }
         return groups;
-    }
-
-    public void delete(GroupData deletedGroup) {
     }
 }
