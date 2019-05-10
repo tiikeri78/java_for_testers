@@ -71,13 +71,8 @@ public class GroupHelper extends BaseHelper {
         for (WebElement element : elements) {
             String name = element.getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            element.findElement(By.cssSelector("input[value='" + id + "']")).click();
-            click(By.name("edit"));
-            String header = wd.findElement(By.name("group_header")).getText();
-            String footer = wd.findElement(By.name("group_footer")).getText();
-            GroupData group = new GroupData(id, name, header, footer);
+            GroupData group = new GroupData(id, name, null, null);
             groups.add(group);
-            click(By.linkText("groups"));
         }
         return groups;
     }
