@@ -1,11 +1,13 @@
 package my.test.addressbook.test;
 
 import my.test.addressbook.model.GroupData;
-import org.testng.Assert;
+import my.test.addressbook.model.Groups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class EditGroupTests extends TestBase {
 
@@ -19,15 +21,14 @@ public class EditGroupTests extends TestBase {
 
     @Test
     public void editGroupTests() {
-        Set<GroupData> before = app.group().set();
+        Groups before = app.group().set();
         GroupData editedGroup = before.iterator().next();
         GroupData group = new GroupData().withId(editedGroup.getId()).withName("Testers").withHeader("work").withFooter("Testers1");
         app.group().modify(group);
-        Set<GroupData> after = app.group().set();
-        Assert.assertEquals(before.size(), after.size());
-
-        before.remove(editedGroup);
-        before.add(group);
-        Assert.assertEquals(before, after);
+        Groups after = app.group().set();
+        System.out.println(before.withEdited(editedGroup, group));
+        System.out.println(after);
+        assertEquals(before.size(), after.size());
+        assertThat(after, equalTo(before.withEdited(editedGroup, group)));
     }
 }

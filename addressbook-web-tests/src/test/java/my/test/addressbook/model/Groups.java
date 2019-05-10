@@ -33,4 +33,11 @@ public class Groups extends ForwardingSet<GroupData> {
         groups.remove(group);
         return groups;
     }
+
+    public Groups withEdited(GroupData editedGroup, GroupData group) {
+        Groups groups = new Groups(this);
+        groups.remove(editedGroup);
+        groups.add(group);
+        return groups;
+    }
 }
