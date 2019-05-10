@@ -1,13 +1,12 @@
 package my.test.addressbook.appmanager;
 
 import my.test.addressbook.model.GroupData;
+import my.test.addressbook.model.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static my.test.addressbook.test.TestBase.app;
 
@@ -82,8 +81,8 @@ public class GroupHelper extends BaseHelper {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public Set<GroupData> set() {
-        Set<GroupData> groups = new HashSet<>();
+    public Groups set() {
+        Groups groups = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
             String name = element.getText();
