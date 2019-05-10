@@ -14,7 +14,7 @@ public class CreateContactTests extends TestBase {
     @Test
     public void createContactTests() {
         app.goTo().groupPage();
-        if (app.group().list().size() == 0) {
+        if (app.group().set().size() == 0) {
             app.group().create(new GroupData().withName("Test1").withHeader("testers").withFooter("test"));
         }
         app.goTo().contactPage();

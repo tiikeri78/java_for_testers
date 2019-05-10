@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,12 +35,8 @@ public class GroupHelper extends BaseHelper {
         click(By.name("new"));
     }
 
-    public void selectGroup(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
-    }
-
-    public void selectById(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
     public void deleteGroup() {
@@ -49,23 +44,20 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void delete(GroupData deletedGroup) {
+        selectById(deletedGroup.getId());
+        deleteGroup();
+        returnToGroupPage();
     }
 
     public void editGroup() {
         click(By.name("edit"));
     }
 
-    public void modify(int index, GroupData group) {
-        selectGroup(index);
+    public void modify(GroupData group) {
+        selectById(group.getId());
         editGroup();
         fillGroupForm(group);
         updateGroup();
-        app.goTo().groupPage();
-    }
-
-    public void delete(int index) {
-        selectGroup(index);
-        deleteGroup();
         app.goTo().groupPage();
     }
 
@@ -88,22 +80,6 @@ public class GroupHelper extends BaseHelper {
     public int getGroupCount() {
 
         return wd.findElements(By.name("selected[]")).size();
-    }
-
-    public List<GroupData> list() {
-       List<GroupData> groups = new ArrayList<>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
-        for (WebElement element : elements) {
-            String name = element.getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            //element.findElement(By.name("selected[]")).click();
-            //click(By.name("edit"));
-            //String header = wd.findElement(By.name("group_header")).getAttribute("cols");
-            //String footer = wd.findElement(By.name("group_footer")).getAttribute("cols");
-            //click(By.linkText("groups"));
-            groups.add(new GroupData().withId(id).withName(name));
-       }
-        return groups;
     }
 
     public Set<GroupData> set() {

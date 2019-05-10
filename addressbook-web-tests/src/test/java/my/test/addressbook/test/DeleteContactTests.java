@@ -16,7 +16,7 @@ public class DeleteContactTests extends TestBase{
     app.goTo().contactPage();
     if (app.contact().list().size() == 0) {
       app.goTo().groupPage();
-      if (app.group().list().size() == 0) {
+      if (app.group().set().size() == 0) {
         app.group().create(new GroupData().withName("Testers").withHeader("testers").withFooter("test5"));
       }
       app.goTo().contactPage();

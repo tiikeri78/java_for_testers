@@ -9,7 +9,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static my.test.addressbook.test.TestBase.app;
 import static org.testng.Assert.assertTrue;
@@ -120,6 +122,23 @@ public class ContactHelper extends BaseHelper {
 
     public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> lines = wd.findElements(By.xpath("//tr[@name='entry']"));
+        for (WebElement element : lines) {
+            List<WebElement> columns = element.findElements(By.tagName("td"));
+            String firstname = columns.get(2).getText();
+            String lastname = columns.get(1).getText();
+            String address = columns.get(3).getText();
+            String email = columns.get(4).getText();
+            String mobileNumber = columns.get(5).getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+            contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withAddress(address)
+                    .withMobileNumber(mobileNumber).withEmail(email));
+        }
+        return contacts;
+    }
+
+    public Set<ContactData> set() {
+        Set<ContactData> contacts = new HashSet<>();
         List<WebElement> lines = wd.findElements(By.xpath("//tr[@name='entry']"));
         for (WebElement element : lines) {
             List<WebElement> columns = element.findElements(By.tagName("td"));
