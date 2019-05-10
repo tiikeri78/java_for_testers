@@ -109,4 +109,7 @@ public class GroupHelper extends BaseHelper {
         }
         return groups;
     }
+
+    public void delete(GroupData deletedGroup) {
+    }
 }
