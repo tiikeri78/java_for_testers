@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,21 +48,21 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
 
-    public void select(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectById(int id) {
+        wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
     }
 
-    public void editContact(int index) {
-        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+    public void editContact(int id) {
+        wd.findElement(By.cssSelector("a[href='" + "edit.php?id=" + id + "']")).click();
     }
 
     public void updateContact() {
         click(By.xpath("(//input[@name='update'])[2]"));
     }
 
-    public void modify(int index, ContactData contact) {
-        select(index);
-        editContact(index);
+    public void modify(ContactData contact) {
+        selectById(contact.getId());
+        editContact(contact.getId());
         fillContact(contact, false);
         updateContact();
         getMessage();
@@ -76,8 +75,8 @@ public class ContactHelper extends BaseHelper {
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 
-    public void delete(int index) {
-        select(index);
+    public void delete(ContactData deletedContact) {
+        selectById(deletedContact.getId());
         deleteContact();
         getMessage();
         app.goTo().contactPage();
@@ -118,23 +117,6 @@ public class ContactHelper extends BaseHelper {
 
     public int getContactCount() {
         return wd.findElements(By.name("selected[]")).size();
-    }
-
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<>();
-        List<WebElement> lines = wd.findElements(By.xpath("//tr[@name='entry']"));
-        for (WebElement element : lines) {
-            List<WebElement> columns = element.findElements(By.tagName("td"));
-            String firstname = columns.get(2).getText();
-            String lastname = columns.get(1).getText();
-            String address = columns.get(3).getText();
-            String email = columns.get(4).getText();
-            String mobileNumber = columns.get(5).getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withAddress(address)
-                    .withMobileNumber(mobileNumber).withEmail(email));
-        }
-        return contacts;
     }
 
     public Set<ContactData> set() {

@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.Set;
 
 public class AddContactToGroupTests extends TestBase{
@@ -32,12 +31,12 @@ public class AddContactToGroupTests extends TestBase{
     app.group().create(group);
     app.goTo().contactPage();
     Set<ContactData> before = app.contact().set();
-    int index = before.size()-1;
-    app.contact().select(index);
+    ContactData editedContact = before.iterator().next();
+    app.contact().selectById(editedContact.getId());
     app.contact().selectGroup(new ContactData().withGroup("Test1"));
     app.contact().addToGroup();
     app.goTo().contactPage();
-    List<ContactData> after = app.contact().list();
+    Set<ContactData> after = app.contact().set();
     Assert.assertEquals(after.size(), before.size());
   }
 }
