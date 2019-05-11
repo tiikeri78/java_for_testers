@@ -1,12 +1,12 @@
 package my.test.addressbook.test;
 
 import my.test.addressbook.model.ContactData;
+import my.test.addressbook.model.Contacts;
 import my.test.addressbook.model.GroupData;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.testng.Assert.assertEquals;
 
 public class AddContactToGroupTests extends TestBase{
 
@@ -30,13 +30,13 @@ public class AddContactToGroupTests extends TestBase{
     GroupData group = new GroupData().withName("Test1").withHeader("test").withFooter("test21");
     app.group().create(group);
     app.goTo().contactPage();
-    Set<ContactData> before = app.contact().set();
+    Contacts before = app.contact().set();
     ContactData editedContact = before.iterator().next();
     app.contact().selectById(editedContact.getId());
     app.contact().selectGroup(new ContactData().withGroup("Test1"));
     app.contact().addToGroup();
     app.goTo().contactPage();
-    Set<ContactData> after = app.contact().set();
-    Assert.assertEquals(after.size(), before.size());
+    Contacts after = app.contact().set();
+    assertEquals(after.size(), before.size());
   }
 }
