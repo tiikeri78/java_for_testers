@@ -1,11 +1,12 @@
 package my.test.addressbook.test;
 
 import my.test.addressbook.model.ContactData;
+import my.test.addressbook.model.Contacts;
 import my.test.addressbook.model.GroupData;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CreateContactTests extends TestBase {
 
@@ -16,17 +17,16 @@ public class CreateContactTests extends TestBase {
             app.group().create(new GroupData().withName("Test1").withHeader("testers").withFooter("test"));
         }
         app.goTo().contactPage();
-        Set<ContactData> before = app.contact().set();
+        Contacts before = app.contact().set();
         ContactData contact = new ContactData().withFirstname("Ti").withLastname("Pin").withAddress("Lunapark")
                 .withMobileNumber("+987954389876").withEmail("12396@mail.ry").withGroup("Test1");
         app.contact().create(contact, true);
         app.goTo().contactPage();
-        Set<ContactData> after = app.contact().set();
-        Assert.assertEquals(after.size(), before.size() + 1);
+        Contacts after = app.contact().set();
 
-        contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
-        before.add(contact);
-        Assert.assertEquals(before, after);
+        assertThat(after.size(), equalTo(before.size() + 1));
+        assertThat(after, equalTo(
+                before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
 
     }
 }
