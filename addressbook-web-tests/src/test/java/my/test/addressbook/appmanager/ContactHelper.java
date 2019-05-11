@@ -147,3 +147,4 @@ public class ContactHelper extends BaseHelper {
         return new Contacts(contactCache);
     }
 }
+ 
