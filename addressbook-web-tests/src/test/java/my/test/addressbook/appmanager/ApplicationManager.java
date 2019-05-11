@@ -47,6 +47,7 @@ public class ApplicationManager {
     }
 
     public NavigationHelper goTo() {
+
         return navigationHelper;
     }
 
@@ -55,6 +56,7 @@ public class ApplicationManager {
     }
 
     public SessionHelper getSessionHelper() {
+
         return sessionHelper;
     }
 }

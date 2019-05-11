@@ -123,7 +123,8 @@ public class ContactHelper extends BaseHelper {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public int getContactCount() {
+    public int count() {
+
         return wd.findElements(By.name("selected[]")).size();
     }
 
@@ -147,4 +148,3 @@ public class ContactHelper extends BaseHelper {
         return new Contacts(contactCache);
     }
 }
- 
