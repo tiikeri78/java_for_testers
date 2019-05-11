@@ -22,8 +22,8 @@ public class CreateContactTests extends TestBase {
                 .withMobileNumber("+987954389876").withEmail("12396@mail.ry").withGroup("Test1");
         app.contact().create(contact, true);
         app.goTo().contactPage();
+        assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.contact().set();
-        assertThat(after.size(), equalTo(before.size() + 1));
         assertThat(after, equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
 

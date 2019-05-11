@@ -48,24 +48,18 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void selectById(int id) {
+
         wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
     }
 
     public void editContact(int id) {
+
         wd.findElement(By.cssSelector("a[href='" + "edit.php?id=" + id + "']")).click();
     }
 
     public void updateContact() {
-        click(By.xpath("(//input[@name='update'])[2]"));
-    }
 
-    public void modify(ContactData contact) {
-        selectById(contact.getId());
-        editContact(contact.getId());
-        fillContact(contact, false);
-        updateContact();
-        getMessage();
-        app.goTo().contactPage();
+        click(By.xpath("(//input[@name='update'])[2]"));
     }
 
     public void deleteContact() {
@@ -74,15 +68,40 @@ public class ContactHelper extends BaseHelper {
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 
+    public WebElement getMessage() {
+
+        return wd.findElement(By.cssSelector(".msgbox"));
+    }
+
+    public void addToGroup() {
+        click(By.name("add"));
+    }
+
+    private Contacts contactCache = null;
+
+    public void modify(ContactData contact) {
+        selectById(contact.getId());
+        editContact(contact.getId());
+        fillContact(contact, false);
+        updateContact();
+        getMessage();
+        contactCache = null;
+        app.goTo().contactPage();
+    }
+
     public void delete(ContactData deletedContact) {
         selectById(deletedContact.getId());
         deleteContact();
         getMessage();
+        contactCache = null;
         app.goTo().contactPage();
     }
 
-    public WebElement getMessage() {
-        return wd.findElement(By.cssSelector(".msgbox"));
+    public void create(ContactData contact, boolean creation) {
+        initAddContact();
+        fillContact(contact, creation);
+        submitAddNewContact();
+        contactCache = null;
     }
 
     private String closeAlertAndGetItsText() {
@@ -100,26 +119,20 @@ public class ContactHelper extends BaseHelper {
         }
     }
 
-    public void addToGroup() {
-        click(By.name("add"));
-    }
-
-    public void create(ContactData contact, boolean creation) {
-        initAddContact();
-        fillContact(contact, creation);
-        submitAddNewContact();
-    }
-
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public int getContactCount() {
+    public int count() {
+
         return wd.findElements(By.name("selected[]")).size();
     }
 
     public Contacts set() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> lines = wd.findElements(By.xpath("//tr[@name='entry']"));
         for (WebElement element : lines) {
             List<WebElement> columns = element.findElements(By.tagName("td"));
@@ -129,9 +142,9 @@ public class ContactHelper extends BaseHelper {
             String email = columns.get(4).getText();
             String mobileNumber = columns.get(5).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withAddress(address)
+            contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withAddress(address)
                     .withMobileNumber(mobileNumber).withEmail(email));
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 }
