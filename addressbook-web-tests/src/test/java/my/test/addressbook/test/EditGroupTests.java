@@ -7,7 +7,6 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
 
 public class EditGroupTests extends TestBase {
 
@@ -28,7 +27,7 @@ public class EditGroupTests extends TestBase {
         Groups after = app.group().set();
         System.out.println(before.withEdited(editedGroup, group));
         System.out.println(after);
-        assertEquals(before.size(), after.size());
+        assertThat(before.size(), equalTo(after.size()));
         assertThat(after, equalTo(before.withEdited(editedGroup, group)));
     }
 }
