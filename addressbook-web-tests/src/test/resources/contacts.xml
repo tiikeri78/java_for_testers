@@ -1,0 +1,26 @@
+<list>
+  <contact>
+    <firstname>Erik</firstname>
+    <lastname>Pek</lastname>
+    <address>Luna</address>
+    <homeNumber>+32230</homeNumber>
+    <mobileNumber>+12230</mobileNumber>
+    <workNumber>+22230</workNumber>
+    <email>test@test.com</email>
+    <email2>test1@test1.com</email2>
+    <email3>test2@test2.com</email3>
+    <group>test0</group>
+  </contact>
+  <contact>
+    <firstname>Erik</firstname>
+    <lastname>Pek</lastname>
+    <address>Luna</address>
+    <homeNumber>+32231</homeNumber>
+    <mobileNumber>+12231</mobileNumber>
+    <workNumber>+22231</workNumber>
+    <email>test@test.com</email>
+    <email2>test1@test1.com</email2>
+    <email3>test2@test2.com</email3>
+    <group>test1</group>
+  </contact>
+</list>
