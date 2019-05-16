@@ -1,0 +1,38 @@
+[
+  {
+    "firstname": "Erik",
+    "lastname": "Pek",
+    "address": "Luna",
+    "homeNumber": "+32230",
+    "mobileNumber": "+12230",
+    "workNumber": "+22230",
+    "email": "test@test.com",
+    "email2": "test1@test1.com",
+    "email3": "test2@test2.com",
+    "group": "test0"
+  },
+  {
+    "firstname": "Erik",
+    "lastname": "Pek",
+    "address": "Luna",
+    "homeNumber": "+32231",
+    "mobileNumber": "+12231",
+    "workNumber": "+22231",
+    "email": "test@test.com",
+    "email2": "test1@test1.com",
+    "email3": "test2@test2.com",
+    "group": "test1"
+  },
+  {
+    "firstname": "Erik",
+    "lastname": "Pek",
+    "address": "Luna",
+    "homeNumber": "+32232",
+    "mobileNumber": "+12232",
+    "workNumber": "+22232",
+    "email": "test@test.com",
+    "email2": "test1@test1.com",
+    "email3": "test2@test2.com",
+    "group": "test2"
+  }
+]

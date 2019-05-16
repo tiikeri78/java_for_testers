@@ -3,6 +3,8 @@ package my.test.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import my.test.addressbook.model.ContactData;
 
@@ -42,9 +44,20 @@ public class ContactDataGenerator {
             saveAsCsv(contacts, new File(file));
         } else if (format.equals("xml")){
             saveAsXML(contacts, new File(file));
-        } else {
+        } else if (format.equals("json")){
+            saveAsJson(contacts, new File(file));
+        }
+        else {
             System.out.println("Unrecognized format: " + format);
         }
+    }
+
+    private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+        String json = gson.toJson(contacts);
+        Writer writer = new FileWriter(file);
+        writer.write(json);
+        writer.close();
     }
 
     private void saveAsXML(List<ContactData> contacts, File file) throws IOException {
@@ -59,9 +72,9 @@ public class ContactDataGenerator {
     private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
         Writer writer = new FileWriter(file);
         for (ContactData contact : contacts) {
-            writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstname(), contact.getLastname(), contact.getAddress(),
+            writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstname(), contact.getLastname(), contact.getAddress(),
                     contact.getMobileNumber(), contact.getHomeNumber(), contact.getWorkNumber(),
-                    contact.getEmail(), contact.getEmail2(), contact.getEmail3()));
+                    contact.getEmail(), contact.getEmail2(), contact.getEmail3(), contact.getGroup()));
         }
         writer.close();
     }
@@ -72,7 +85,8 @@ public class ContactDataGenerator {
             contacts.add(new ContactData().withFirstname(String.format("Erik", i)).withLastname(String.format("Pek", i))
                     .withAddress(String.format("Luna", i))
                     .withMobileNumber(String.format("+1223%s", i)).withHomeNumber(String.format("+3223%s", i)).withWorkNumber(String.format("+2223%s", i))
-                    .withEmail(String.format("test@test.com", i)).withEmail2(String.format("test1@test1.com", i)).withEmail3(String.format("test2@test2.com", i)));
+                    .withEmail(String.format("test@test.com", i)).withEmail2(String.format("test1@test1.com", i)).withEmail3(String.format("test2@test2.com", i))
+                    .withGroup(String.format("test%s", i)));
         }
         return contacts;
     }
