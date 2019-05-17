@@ -160,18 +160,6 @@ public class ContactData {
     }
 
     @Override
-    public String toString() {
-        return "ContactData{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", address='" + address + '\'' +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", allEmails='" + allEmails + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -184,5 +172,21 @@ public class ContactData {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstname, lastname);
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", address='" + address + '\'' +
+                ", homeNumber='" + homeNumber + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", workNumber='" + workNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
+                ", group='" + group + '\'' +
+                '}';
     }
 }

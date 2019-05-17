@@ -34,7 +34,6 @@ public class CreateGroupTests extends TestBase {
         xstream.processAnnotations(GroupData.class);
         List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
         return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
-        //return list.iterator();
     }
 
     @DataProvider
