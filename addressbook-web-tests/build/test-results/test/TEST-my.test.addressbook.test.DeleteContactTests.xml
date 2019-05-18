@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="my.test.addressbook.test.DeleteContactTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-05-18T07:15:30" hostname="alekseeva-nb5" time="1.893">
+  <properties/>
+  <testcase name="deleteContactTests" classname="my.test.addressbook.test.DeleteContactTests" time="1.893"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
