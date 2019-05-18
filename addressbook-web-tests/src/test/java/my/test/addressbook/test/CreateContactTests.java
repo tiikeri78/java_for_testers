@@ -65,7 +65,7 @@ public class CreateContactTests extends TestBase {
         Contacts before = app.contact().set();
         //File photo = new File("src/test/resources/frog.jpg");
         //ContactData contact = new ContactData().withFirstname("Ti")
-          //      .withLastname("Pin").withAddress("Lunapark").withMobileNumber("+987954389876").withEmail("12396@mail.ry").withGroup("Test1").withPhoto(photo);
+        //      .withLastname("Pin").withAddress("Lunapark").withMobileNumber("+987954389876").withEmail("12396@mail.ry").withGroup("Test1").withPhoto(photo);
         app.contact().create(contact, true);
         app.goTo().contactPage();
         assertThat(app.contact().count(), equalTo(before.size() + 1));
