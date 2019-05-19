@@ -3,13 +3,13 @@
 <suite name="Suite1" verbose="1" >
       <test name="Contacts">
         <classes>
-            <class name="my.test.addressbook.test.CreateContactTests"/>
-            <class name="my.test.addressbook.test.EditContactTests"/>
-            <class name="my.test.addressbook.test.AddContactToGroupTests"/>
+            <class name="my.test.addressbook.test.CreateContactTest"/>
+            <class name="my.test.addressbook.test.EditContactTest"/>
+            <class name="my.test.addressbook.test.AddContactToGroupTest"/>
             <class name="my.test.addressbook.test.ContactEmailsTests"/>
             <class name="my.test.addressbook.test.ContactPhonesTest"/>
             <class name="my.test.addressbook.test.ContactAddressTest"/>
-            <class name="my.test.addressbook.test.DeleteContactTests"/>
+            <class name="my.test.addressbook.test.DeleteContactTest"/>
         </classes>
     </test>
 </suite>

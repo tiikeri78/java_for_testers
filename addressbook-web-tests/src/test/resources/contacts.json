@@ -1,14 +1,38 @@
 [
   {
-    "firstname": "Erik",
-    "lastname": "Pek",
-    "address": "Luna",
-    "homeNumber": "+32230",
-    "mobileNumber": "+12230",
-    "workNumber": "+22230",
-    "email": "test@test.com",
-    "email2": "test1@test1.com",
-    "email3": "test2@test2.com",
-    "group": "test0"
+    "firstname": "Sandra",
+    "lastname": "Lost",
+    "address": "Mars",
+    "homeNumber": "+30876230",
+    "mobileNumber": "+198230",
+    "workNumber": "+22873230",
+    "email": "test@rep.com",
+    "email2": "test1@ot1.com",
+    "email3": "test2@t82.com",
+    "group": "testers0"
+  },
+  {
+    "firstname": "Sandra",
+    "lastname": "Lost",
+    "address": "Mars",
+    "homeNumber": "+30876231",
+    "mobileNumber": "+198231",
+    "workNumber": "+22873231",
+    "email": "test@rep.com",
+    "email2": "test1@ot1.com",
+    "email3": "test2@t82.com",
+    "group": "testers1"
+  },
+  {
+    "firstname": "Sandra",
+    "lastname": "Lost",
+    "address": "Mars",
+    "homeNumber": "+30876232",
+    "mobileNumber": "+198232",
+    "workNumber": "+22873232",
+    "email": "test@rep.com",
+    "email2": "test1@ot1.com",
+    "email3": "test2@t82.com",
+    "group": "testers2"
   }
 ]

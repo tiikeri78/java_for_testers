@@ -8,24 +8,23 @@ import org.testng.annotations.Test;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class EditGroupTests extends TestBase {
+public class DeleteGroupTest extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
+    public void ensurePreconditions() {
         app.goTo().groupPage();
-        if (app.group().set().size() == 0){
+        if (app.group().set().size() == 0) {
             app.group().create(new GroupData().withName("Admin").withHeader("testers").withFooter("ad21"));
         }
     }
 
     @Test
-    public void editGroupTests() {
+    public void deleteGroupTests() {
         Groups before = app.group().set();
-        GroupData editedGroup = before.iterator().next();
-        GroupData group = new GroupData().withId(editedGroup.getId()).withName("Testers").withHeader("work").withFooter("Testers1");
-        app.group().modify(group);
-        assertThat(app.group().count(), equalTo(before.size()));
+        GroupData deletedGroup = before.iterator().next();
+        app.group().delete(deletedGroup);
+        assertThat(app.group().count(), equalTo(before.size() - 1));
         Groups after = app.group().set();
-        assertThat(after, equalTo(before.withEdited(editedGroup, group)));
+        assertThat(after, equalTo(before.without(deletedGroup)));
     }
 }

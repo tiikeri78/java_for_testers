@@ -6,12 +6,14 @@ import my.test.addressbook.model.GroupData;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
-public class AddContactToGroupTests extends TestBase{
+public class DeleteContactTest extends TestBase{
 
   @BeforeMethod
-  public void ensurePreconditions(){
+  public void ensurePreconditions() {
     app.goTo().contactPage();
     if (app.contact().set().size() == 0) {
       app.goTo().groupPage();
@@ -25,18 +27,13 @@ public class AddContactToGroupTests extends TestBase{
   }
 
   @Test
-  public void addContactToGroupTests() {
-    app.goTo().groupPage();
-    GroupData group = new GroupData().withName("Test1").withHeader("test").withFooter("test21");
-    app.group().create(group);
+  public void deleteContactTests() {
     app.goTo().contactPage();
     Contacts before = app.contact().set();
-    ContactData editedContact = before.iterator().next();
-    app.contact().selectById(editedContact.getId());
-    app.contact().selectGroup(new ContactData().withGroup("Test1"));
-    app.contact().addToGroup();
-    app.goTo().contactPage();
+    ContactData deletedContact = before.iterator().next();
+    app.contact().delete(deletedContact);
+    assertEquals(app.contact().count(), before.size() - 1);
     Contacts after = app.contact().set();
-    assertEquals(after.size(), before.size());
+    assertThat(after, equalTo(before.without(deletedContact)));
   }
 }
