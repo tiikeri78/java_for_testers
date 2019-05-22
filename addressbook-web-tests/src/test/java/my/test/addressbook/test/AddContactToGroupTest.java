@@ -37,5 +37,6 @@ public class AddContactToGroupTest extends TestBase{
     app.goTo().contactPage();
     Contacts after = app.db().contacts();
     assertEquals(after.size(), before.size());
+    verifyContactListInUI();
   }
 }
