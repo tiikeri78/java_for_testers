@@ -21,8 +21,8 @@ public class ContactPhonesTest extends TestBase {
                 app.group().create(new GroupData().withName("Testers").withHeader("testers").withFooter("test5"));
             }
             app.goTo().contactPage();
-            app.contact().create(new ContactData().withFirstname("Zelda").withLastname("Smith").withAddress("Nevada").withMobileNumber("+195432567").withEmail("krasotka@mail.ry")
-                    .withGroup("Testers"), true);
+            app.contact().create(new ContactData().withFirstname("Zelda").withLastname("Smith").withAddress("Nevada").withMobileNumber("+195432567")
+                    .withEmail("krasotka@mail.ry"), true);
         }
     }
 

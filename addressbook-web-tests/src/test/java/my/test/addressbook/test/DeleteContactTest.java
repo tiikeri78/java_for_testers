@@ -24,7 +24,7 @@ public class DeleteContactTest extends TestBase{
       app.goTo().contactPage();
       File photo = new File("src/test/resources/frog.jpg");
       app.contact().create(new ContactData().withFirstname("Zelda").withLastname("Smith").withAddress("Nevada").withMobileNumber("+195432567")
-              .withEmail("krasotka@mail.ry").withGroup("Test1").withPhoto(photo), true);
+              .withEmail("krasotka@mail.ry").withPhoto(photo), true);
     }
   }
 

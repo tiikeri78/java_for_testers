@@ -3,6 +3,7 @@ package my.test.addressbook.test;
 import my.test.addressbook.model.ContactData;
 import my.test.addressbook.model.Contacts;
 import my.test.addressbook.model.GroupData;
+import my.test.addressbook.model.Groups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -19,20 +20,18 @@ public class AddContactToGroupTest extends TestBase{
     if (app.db().contacts().size() == 0) {
       app.goTo().contactPage();
       app.contact().create(new ContactData().withFirstname("Zelda").withLastname("Smith").withAddress("Nevada").withMobileNumber("+195432567")
-              .withEmail("krasotka@mail.ry").withGroup("Test1"), true);
+              .withEmail("krasotka@mail.ry"), true);
     }
   }
 
   @Test
   public void addContactToGroupTests() {
-    app.goTo().groupPage();
-    GroupData group = new GroupData().withName("Test1").withHeader("test").withFooter("test21");
-    app.group().create(group);
+    Groups groups = app.db().groups();
     Contacts before = app.db().contacts();
     app.goTo().contactPage();
     ContactData editedContact = before.iterator().next();
     app.contact().selectById(editedContact.getId());
-    app.contact().selectGroup(new ContactData().withGroup("Test1"));
+    app.contact().selectGroup(new ContactData().inGroup(groups.iterator().next()));
     app.contact().addToGroup();
     app.goTo().contactPage();
     Contacts after = app.db().contacts();

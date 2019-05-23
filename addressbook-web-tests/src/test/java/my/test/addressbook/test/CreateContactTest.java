@@ -61,11 +61,13 @@ public class CreateContactTest extends TestBase {
             app.group().create(new GroupData().withName("Test1").withHeader("testers").withFooter("t66"));
         }
 
+       // Groups groups = app.db().groups();
         app.goTo().contactPage();
         Contacts before = app.db().contacts();
         //File photo = new File("src/test/resources/frog.jpg");
         //ContactData contact = new ContactData().withFirstname("Ti")
-        //      .withLastname("Pin").withAddress("Lunapark").withMobileNumber("+987954389876").withEmail("12396@mail.ry").withGroup("Test1").withPhoto(photo);
+        //      .withLastname("Pin").withAddress("Lunapark").withMobileNumber("+987954389876").withEmail("12396@mail.ry")
+        //      .withPhoto(photo).inGroup(groups.iterator().next());
         app.contact().create(contact, true);
         app.goTo().contactPage();
         assertThat(app.contact().count(), equalTo(before.size() + 1));
