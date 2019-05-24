@@ -31,9 +31,15 @@ public class DeleteContactFromGroupTest extends TestBase {
     @Test
     public void deleteContactFromGroupTest() {
         Groups groups = app.db().groups();
+        ContactData group = new ContactData().inGroup(groups.iterator().next());
+        System.out.println(group);
         Contacts before = app.db().contacts();
         app.goTo().contactPage();
         app.contact().selectGroupForSort(new ContactData().inGroup(groups.iterator().next()));
+        if (! app.contact().isThereAContact()){
+            app.stop();
+           // app.contact().selectGroupForSort();
+        }
         ContactData editedContact = before.iterator().next();
         app.contact().selectById(editedContact.getId());
         app.contact().removeFromGroup();
