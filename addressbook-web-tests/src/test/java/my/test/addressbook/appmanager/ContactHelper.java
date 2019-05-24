@@ -53,6 +53,12 @@ public class ContactHelper extends BaseHelper {
                  .iterator().next().getName());
     }
 
+    public void selectGroupForSort(ContactData group) {
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getGroups()
+                .iterator().next().getName());
+    }
+
+
     public void submitAddNewContact() {
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
@@ -85,6 +91,10 @@ public class ContactHelper extends BaseHelper {
 
     public void addToGroup() {
         click(By.name("add"));
+    }
+
+    public void removeFromGroup() {
+        click(By.name("remove"));
     }
 
     private void initContactModificationById(int id){

@@ -19,7 +19,7 @@ public class DeleteGroupTest extends TestBase {
     }
 
     @Test
-    public void deleteGroupTests() {
+    public void deleteGroupTest() {
         Groups before = app.db().groups();
         app.goTo().groupPage();
         GroupData deletedGroup = before.iterator().next();

@@ -3,44 +3,43 @@ package my.test.addressbook.test;
 import my.test.addressbook.model.ContactData;
 import my.test.addressbook.model.Contacts;
 import my.test.addressbook.model.GroupData;
+import my.test.addressbook.model.Groups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
-public class EditContactTest extends TestBase {
+public class DeleteContactFromGroupTest extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions() {
-
+    public void ensurePreconditions(){
         if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("Test1").withHeader("testers").withFooter("t66"));
         }
+        Groups groups = app.db().groups();
+        File photo = new File("src/test/resources/frog.jpg");
         if (app.db().contacts().size() == 0) {
             app.goTo().contactPage();
-            File photo = new File("src/test/resources/frog.jpg");
             app.contact().create(new ContactData().withFirstname("Zelda").withLastname("Smith").withAddress("Nevada").withMobileNumber("+195432567")
-                    .withEmail("krasotka@mail.ry").withPhoto(photo), true);
+                    .withEmail("krasotka@mail.ry").withPhoto(photo).inGroup(groups.iterator().next()), true);
         }
-
     }
 
     @Test
-    public void editContactTest() {
+    public void deleteContactFromGroupTest() {
+        Groups groups = app.db().groups();
         Contacts before = app.db().contacts();
         app.goTo().contactPage();
+        app.contact().selectGroupForSort(new ContactData().inGroup(groups.iterator().next()));
         ContactData editedContact = before.iterator().next();
-        ContactData contact = new ContactData().withId(editedContact.getId()).withFirstname("Marat").withLastname("Notka").withAddress("New")
-                .withMobileNumber("+2569988").withEmail("m32@mail.ry");
-        app.contact().modify(contact);
-        assertEquals(app.contact().count(), before.size());
+        app.contact().selectById(editedContact.getId());
+        app.contact().removeFromGroup();
+        app.goTo().contactPage();
         Contacts after = app.db().contacts();
-        assertThat(after, equalTo(before.withEdited(editedContact, contact)));
+        assertEquals(after.size(), before.size());
         verifyContactListInUI();
     }
 }

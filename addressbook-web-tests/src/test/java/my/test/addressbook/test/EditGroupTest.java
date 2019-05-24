@@ -19,7 +19,7 @@ public class EditGroupTest extends TestBase {
     }
 
     @Test
-    public void editGroupTests() {
+    public void editGroupTest() {
         Groups before = app.db().groups();
         GroupData editedGroup = before.iterator().next();
         GroupData group = new GroupData().withId(editedGroup.getId()).withName("Testers").withHeader("work").withFooter("Testers1");

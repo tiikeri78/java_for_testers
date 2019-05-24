@@ -29,7 +29,7 @@ public class DeleteContactTest extends TestBase{
   }
 
   @Test
-  public void deleteContactTests() {
+  public void deleteContactTest() {
     Contacts before = app.db().contacts();
     app.goTo().contactPage();
     ContactData deletedContact = before.iterator().next();

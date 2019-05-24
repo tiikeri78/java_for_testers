@@ -55,19 +55,19 @@ public class CreateContactTest extends TestBase {
     }
 
     @Test(dataProvider = "validContactsFromJson")
-    public void createContactTests(ContactData contact) {
+    public void createContactTest(ContactData contact) {
         if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("Test1").withHeader("testers").withFooter("t66"));
         }
 
-       // Groups groups = app.db().groups();
+        //Groups groups = app.db().groups();
         app.goTo().contactPage();
         Contacts before = app.db().contacts();
         //File photo = new File("src/test/resources/frog.jpg");
-        //ContactData contact = new ContactData().withFirstname("Ti")
-        //      .withLastname("Pin").withAddress("Lunapark").withMobileNumber("+987954389876").withEmail("12396@mail.ry")
-        //      .withPhoto(photo).inGroup(groups.iterator().next());
+        //ContactData contact1 = new ContactData().withFirstname("Ti")
+          //    .withLastname("Pin").withAddress("Lunapark").withMobileNumber("+987954389876").withEmail("12396@mail.ry")
+            // .withPhoto(photo).inGroup(groups.iterator().next());
         app.contact().create(contact, true);
         app.goTo().contactPage();
         assertThat(app.contact().count(), equalTo(before.size() + 1));
