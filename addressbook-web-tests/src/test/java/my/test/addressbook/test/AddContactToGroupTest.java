@@ -8,8 +8,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,16 +33,12 @@ public class AddContactToGroupTest extends TestBase {
     public void addContactToGroupTest() {
 
         Groups groups = app.db().groups();
-        List<Groups> groupsList = new ArrayList<>();
-        groupsList.add(groups);
         Contacts contacts = app.db().contacts();
         ContactData editedContact = contacts.iterator().next();
         int idEditedContact = editedContact.getId();
         Groups contactGroupsBefore = editedContact.getGroups();
-        List<Groups> contactGroupsList = new ArrayList<>();
-        contactGroupsList.add(editedContact.getGroups());
-        groupsList.removeAll(contactGroupsList);
-        if (groupsList.size() == 0){
+        groups.removeAll(contactGroupsBefore);
+        if (groups.size() == 0){
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("Test" + Math.random()).withHeader("testers").withFooter("t66"));
             groups = app.db().groups();
