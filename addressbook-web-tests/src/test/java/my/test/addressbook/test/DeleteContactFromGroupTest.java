@@ -8,13 +8,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.util.stream.Collectors;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class DeleteContactFromGroupTest extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
+    public void ensurePreconditions() {
         if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("Test1").withHeader("testers").withFooter("t66"));
@@ -31,21 +33,28 @@ public class DeleteContactFromGroupTest extends TestBase {
     @Test
     public void deleteContactFromGroupTest() {
         Groups groups = app.db().groups();
-        ContactData group = new ContactData().inGroup(groups.iterator().next());
-        System.out.println(group);
-        Contacts before = app.db().contacts();
-        app.goTo().contactPage();
-        app.contact().selectGroupForSort(new ContactData().inGroup(groups.iterator().next()));
-        if (! app.contact().isThereAContact()){
-            app.stop();
-           // app.contact().selectGroupForSort();
-        }
+        Contacts before = app.db().contacts().stream().filter((s) -> s.getGroups().size() < groups.size()).collect(Collectors.toCollection(Contacts::new));
         ContactData editedContact = before.iterator().next();
+        int idEditedContact = editedContact.getId();
+        Groups contactGroupsBefore = editedContact.getGroups();
+        if (contactGroupsBefore.size() == 0) {
+            GroupData addToGroup = groups.stream().iterator().next();
+            app.goTo().contactPage();
+            app.contact().addToGroup(addToGroup, editedContact);
+            app.db().contacts();
+        }
+        contactGroupsBefore = editedContact.getGroups();
+        GroupData group = contactGroupsBefore.iterator().next();
+        app.goTo().contactPage();
+        app.group().selectGroupForSort(group);
         app.contact().selectById(editedContact.getId());
         app.contact().removeFromGroup();
         app.goTo().contactPage();
         Contacts after = app.db().contacts();
-        assertEquals(after.size(), before.size());
+        ContactData contactAfter = after.stream().filter(id -> equals(idEditedContact)).iterator().next();
+        Groups contactGroupsAfter = contactAfter.getGroups();
+        assertThat(contactGroupsAfter, equalTo(contactGroupsBefore.without(group)));
         verifyContactListInUI();
     }
+
 }

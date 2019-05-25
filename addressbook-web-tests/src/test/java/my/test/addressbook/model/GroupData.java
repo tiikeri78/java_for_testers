@@ -17,14 +17,19 @@ public class GroupData {
     @XStreamOmitField
     @Id
     @Column(name = "group_id")
-    private int id = 0;
+    public int id = 0;
     @Expose
     @Column(name = "group_name")
-    private String name;
+    public String name;
     @Expose
     @Column(name = "group_header")
     @Type(type = "text")
-    private String header;
+    public String header;
+
+    @Expose
+    @Column(name = "group_footer")
+    @Type(type = "text")
+    public String footer;
 
     public Contacts getContacts() {
         return new Contacts(contacts);
@@ -48,11 +53,6 @@ public class GroupData {
     public int hashCode() {
         return Objects.hash(id, name, header, footer);
     }
-
-    @Expose
-    @Column(name = "group_footer")
-    @Type(type = "text")
-    private String footer;
 
     public int getId() {
         return id;
@@ -93,9 +93,8 @@ public class GroupData {
     @Override
     public String toString() {
         return "GroupData{" +
-                "name='" + name + '\'' +
-                ", header='" + header + '\'' +
-                ", footer='" + footer + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

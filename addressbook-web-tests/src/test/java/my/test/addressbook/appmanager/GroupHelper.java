@@ -5,6 +5,7 @@ import my.test.addressbook.model.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -55,6 +56,14 @@ public class GroupHelper extends BaseHelper {
     }
 
     private Groups groupCache = null;
+
+    public void selectGroup(GroupData group) {
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+    }
+
+    public void selectGroupForSort(GroupData group) {
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+    }
 
     public void delete(GroupData deletedGroup) {
         selectById(deletedGroup.getId());

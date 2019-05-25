@@ -139,6 +139,15 @@ public class ContactData {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
@@ -210,18 +219,4 @@ public class ContactData {
         return new Groups(groups);
     }
 
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", address='" + address + '\'' +
-                ", homeNumber='" + homeNumber + '\'' +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", workNumber='" + workNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", email2='" + email2 + '\'' +
-                ", email3='" + email3 + '\'' +
-                '}';
-    }
 }

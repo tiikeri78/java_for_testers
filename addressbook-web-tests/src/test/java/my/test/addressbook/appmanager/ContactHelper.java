@@ -2,7 +2,7 @@ package my.test.addressbook.appmanager;
 
 import my.test.addressbook.model.ContactData;
 import my.test.addressbook.model.Contacts;
-import my.test.addressbook.model.Groups;
+import my.test.addressbook.model.GroupData;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -53,18 +53,6 @@ public class ContactHelper extends BaseHelper {
          new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getGroups()
                  .iterator().next().getName());
     }
-
-    public void selectGroupForSort(ContactData group) {
-        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getGroups()
-                .iterator().next().getName());
-    }
-
-    public void addToGroup(Groups groups, ContactData editedContact) {
-        app.contact().selectById(editedContact.getId());
-        app.contact().selectGroup(new ContactData().inGroup(groups.iterator().next()));
-        app.contact().addToGroup();
-    }
-
 
     public void submitAddNewContact() {
         click(By.xpath("(//input[@name='submit'])[2]"));
@@ -132,6 +120,12 @@ public class ContactHelper extends BaseHelper {
         getMessage();
         contactCache = null;
         app.goTo().contactPage();
+    }
+
+    public void addToGroup(GroupData group, ContactData contact) {
+        selectById(contact.getId());
+        app.group().selectGroup(group);
+        addToGroup();
     }
 
     public void delete(ContactData deletedContact) {

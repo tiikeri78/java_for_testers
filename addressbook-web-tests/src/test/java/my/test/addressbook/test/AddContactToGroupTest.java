@@ -8,9 +8,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddContactToGroupTest extends TestBase {
 
@@ -31,21 +33,31 @@ public class AddContactToGroupTest extends TestBase {
 
     @Test
     public void addContactToGroupTest() {
+
         Groups groups = app.db().groups();
-        Contacts before = app.db().contacts().stream().filter((s) -> s.getGroups().size() < groups.size()).collect(Collectors.toCollection(Contacts::new));
-        if(before.size() == 0){
-            app.goTo().groupPage();
-            app.group().create(new GroupData().withName("People1").withHeader("t11").withFooter("t26"));
-            before = app.db().contacts().stream().filter((s) -> s.getGroups().size() < groups.size()).collect(Collectors.toCollection(Contacts::new));
-        }
-        ContactData editedContact = before.iterator().next();
+        List<Groups> groupsList = new ArrayList<>();
+        groupsList.add(groups);
+        Contacts contacts = app.db().contacts();
+        ContactData editedContact = contacts.iterator().next();
+        int idEditedContact = editedContact.getId();
         Groups contactGroupsBefore = editedContact.getGroups();
-        groups.removeAll(contactGroupsBefore);
+        List<Groups> contactGroupsList = new ArrayList<>();
+        contactGroupsList.add(editedContact.getGroups());
+        groupsList.removeAll(contactGroupsList);
+        if (groupsList.size() == 0){
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("Test" + Math.random()).withHeader("testers").withFooter("t66"));
+            groups = app.db().groups();
+        }
+        GroupData groupForAdd = groups.stream().iterator().next();
         app.goTo().contactPage();
-        app.contact().addToGroup(groups, editedContact);
+        app.contact().addToGroup(groupForAdd, editedContact);
         app.goTo().contactPage();
-        Groups contactGroupsAfter = editedContact.getGroups();
-        assertEquals(contactGroupsAfter.size(), contactGroupsBefore.size());
+        Contacts after = app.db().contacts();
+        ContactData contactAfter = after.stream().filter(id -> equals(idEditedContact)).iterator().next();
+        Groups contactGroupsAfter = contactAfter.getGroups();
+        assertThat(contactGroupsAfter, equalTo(contactGroupsBefore.withAdded(groupForAdd)));
+
         verifyContactListInUI();
     }
 }
