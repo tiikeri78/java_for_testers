@@ -17,7 +17,7 @@ import java.util.List;
 public class HttpSession {
     private CloseableHttpClient httpclient;
     private ApplicationManager app;
-    List<BasicNameValuePair> params = new ArrayList<>();
+
 
     public HttpSession(ApplicationManager app) {
         this.app = app;
@@ -25,25 +25,16 @@ public class HttpSession {
     }
 
     public boolean login(String username, String password) throws IOException {
-        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login_page.php");
+        List<BasicNameValuePair> params = new ArrayList<>();
+        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login.php");
         params.add(new BasicNameValuePair("username", username));
+        params.add(new BasicNameValuePair("password", password));
         params.add(new BasicNameValuePair("secure_session", "on"));
-        params.add(new BasicNameValuePair("return", "login_password_page.php"));
+        params.add(new BasicNameValuePair("return", "index.php"));
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpclient.execute(post);
         String body = geTextFrom(response);
-        return body.contains(String.format("<span class=\"block input-icon input-icon-right\">%s</span", username));
-    }
-
-    public boolean password(String username, String password) throws IOException {
-        HttpPost postPass = new HttpPost(app.getProperty("web.baseUrl") + "/login_password_page.php");
-        params.add(new BasicNameValuePair("password", password));
-        params.add(new BasicNameValuePair("secure_session", "on"));
-        params.add(new BasicNameValuePair("return", "account_page.php"));
-        postPass.setEntity(new UrlEncodedFormEntity(params));
-        CloseableHttpResponse response = httpclient.execute(postPass);
-        String body = geTextFrom(response);
-        return body.contains(String.format("<span class=\"block input-icon input-icon-right\">%s</span", password));
+        return body.contains(String.format("<span class=\"input\"><span class=\"field-value\">%s</span></span>", username));
     }
 
     private String geTextFrom(CloseableHttpResponse response) throws IOException {
@@ -58,6 +49,6 @@ public class HttpSession {
         HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/login.php");
         CloseableHttpResponse response = httpclient.execute(get);
         String body = geTextFrom(response);
-        return body.contains(String.format("<span class=\"italic\">%s</span", username));
+        return body.contains(String.format("<span id=\"logged-in-user\">%s</span>", username));
     }
 }
