@@ -88,7 +88,7 @@ public class ContactHelper extends BaseHelper {
         click(By.name("add"));
     }
 
-    public void removeFromGroup() {
+    public void deleteFromGroup() {
         click(By.name("remove"));
     }
 
@@ -126,6 +126,12 @@ public class ContactHelper extends BaseHelper {
         selectById(contact.getId());
         app.group().selectGroup(group);
         addToGroup();
+    }
+
+    public void removeFromGroup(ContactData editedContact, GroupData group) {
+        app.group().selectGroupForSort(group);
+        selectById(editedContact.getId());
+        deleteFromGroup();
     }
 
     public void delete(ContactData deletedContact) {

@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,12 +32,12 @@ public class DeleteContactFromGroupTest extends TestBase {
 
     @Test
     public void deleteContactFromGroupTest() {
-        Groups groups = app.db().groups();
-        Contacts before = app.db().contacts().stream().filter((s) -> s.getGroups().size() < groups.size()).collect(Collectors.toCollection(Contacts::new));
-        ContactData editedContact = before.iterator().next();
+        Contacts contacts = app.db().contacts();
+        ContactData editedContact = contacts.iterator().next();
         int idEditedContact = editedContact.getId();
         Groups contactGroupsBefore = editedContact.getGroups();
         if (contactGroupsBefore.size() == 0) {
+            Groups groups = app.db().groups();
             GroupData addToGroup = groups.stream().iterator().next();
             app.goTo().contactPage();
             app.contact().addToGroup(addToGroup, editedContact);
@@ -46,15 +46,12 @@ public class DeleteContactFromGroupTest extends TestBase {
         contactGroupsBefore = editedContact.getGroups();
         GroupData group = contactGroupsBefore.iterator().next();
         app.goTo().contactPage();
-        app.group().selectGroupForSort(group);
-        app.contact().selectById(editedContact.getId());
-        app.contact().removeFromGroup();
+        app.contact().removeFromGroup(editedContact, group);
         app.goTo().contactPage();
         Contacts after = app.db().contacts();
-        ContactData contactAfter = after.stream().filter(id -> equals(idEditedContact)).iterator().next();
+        ContactData contactAfter = after.stream().filter(data -> Objects.equals(data.getId(), idEditedContact)).findFirst().get();
         Groups contactGroupsAfter = contactAfter.getGroups();
         assertThat(contactGroupsAfter, equalTo(contactGroupsBefore.without(group)));
         verifyContactListInUI();
     }
-
 }
