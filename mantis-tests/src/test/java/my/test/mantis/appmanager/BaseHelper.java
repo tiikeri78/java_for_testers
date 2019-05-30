@@ -13,7 +13,7 @@ public class BaseHelper {
 
     public BaseHelper(ApplicationManager app) {
         this.app = app;
-        this.wd = wd;
+        this.wd = app.getDriver();
     }
 
     protected void click(By locator) {
