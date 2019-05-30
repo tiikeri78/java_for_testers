@@ -1,5 +1,6 @@
 package my.test.mantis.test;
 
+import my.test.mantis.appmanager.HttpSession;
 import my.test.mantis.model.MailMessage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -26,10 +27,12 @@ public class RegistrationTest extends TestBase {
         String password = "password";
         String email = String.format("user%s@localhost.localdomain", now);
         app.registration().start(user, email);
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+        List<MailMessage> mailMessages = app.mail().waitForMail(2, 60000);
         String confirmationLink = findConfirmationLink(mailMessages, email);
         app.registration().finish(confirmationLink, password);
-        assertTrue(app.newSession().login(user, password));
+        HttpSession session = app.newSession();
+        assertTrue(session.login(user, password));
+        assertTrue(session.isLoggedInAs(user));
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
