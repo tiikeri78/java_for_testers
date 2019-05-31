@@ -49,6 +49,6 @@ public class HttpSession {
         HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/login.php");
         CloseableHttpResponse response = httpclient.execute(get);
         String body = geTextFrom(response);
-        return body.contains(String.format("<span id=\"logged-in-user\">%s</span>", username));
+        return body.contains(String.format("<span id=\"logged-in-username\">%s</span>", username));
     }
 }
