@@ -1,6 +1,5 @@
 package my.test.mantis.test;
 
-import my.test.mantis.appmanager.HttpSession;
 import my.test.mantis.model.MailMessage;
 import my.test.mantis.model.UserData;
 import my.test.mantis.model.Users;
@@ -9,11 +8,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
 import java.util.List;
-
-import static org.testng.Assert.assertTrue;
+import java.util.Objects;
 
 public class ChangeUserPasswordTest extends TestBase {
     @BeforeMethod
@@ -22,18 +18,22 @@ public class ChangeUserPasswordTest extends TestBase {
     }
 
     @Test
-    public void testChangePassword() throws IOException, MessagingException {
+    public void testChangePassword() {
         app.registration().loginAdmin();
         Users users = app.db().users();
         UserData editedUser = users.iterator().next();
+        int idEditedUser = editedUser.getId();
         app.registration().changePassword(editedUser.getUsername());
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 60000);
+        List<MailMessage> mailMessages = app.mail().waitForMail(1, 60000);
         String confirmationLink = findConfirmationLink(mailMessages, editedUser.getEmail());
         String password = "password";
         app.registration().finish(confirmationLink, password);
-        HttpSession session = app.newSession();
-        session.login(editedUser.getUsername(), password);
-        assertTrue(session.isLoggedInAs(editedUser.getUsername()));
+        app.registration().logout();
+        Users usersAfter = app.db().users();
+        UserData userAfter = usersAfter.stream().filter(data -> Objects.equals(data.getId(), idEditedUser)).findFirst().get();
+        String user = userAfter.getUsername();
+        String passwordNew = userAfter.getPassword();
+        app.registration().login(user, passwordNew);
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {

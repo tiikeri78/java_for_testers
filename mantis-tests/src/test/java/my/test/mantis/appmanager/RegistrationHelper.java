@@ -28,11 +28,22 @@ public class RegistrationHelper extends BaseHelper{
         click(By.cssSelector("input[value='Войти']"));
     }
 
+    public void login(String username, String password){
+        wd.get(app.getProperty("web.baseUrl") + "/login_page.php");
+        type(By.name("username"), username);
+        type(By.name("password"), password);
+        click(By.cssSelector("input[value='Войти']"));
+    }
+
     public void changePassword(String username) {
         wd.findElement(By.linkText("управление")).click();
         wd.findElement(By.linkText("Управление пользователями")).click();
         click(By.linkText(username));
         click(By.cssSelector("input[value='Сбросить пароль']"));
+    }
+
+    public void logout(){
+        wd.findElement(By.linkText("выход")).click();
     }
 
     public void finish(String confirmationLink, String password) {
