@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class RegistrationTest extends TestBase {
     }
 
     @Test
-    public void testRegistration() throws IOException, MessagingException {
+    public void testRegistration() throws IOException {
         long now = System.currentTimeMillis();
         String user = String.format("username%s", now);
         String password = "password";
