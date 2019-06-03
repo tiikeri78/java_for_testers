@@ -21,7 +21,7 @@ public class ChangeUserPasswordTest extends TestBase {
     public void testChangePassword() {
         app.registration().loginAdmin();
         Users users = app.db().users();
-        if (users.size() == 0){
+        if (users.size() == 1){
             long now = System.currentTimeMillis();
             String user = String.format("username%s", now);
             String password = "password";
