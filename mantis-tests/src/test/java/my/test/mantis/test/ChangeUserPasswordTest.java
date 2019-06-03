@@ -21,7 +21,22 @@ public class ChangeUserPasswordTest extends TestBase {
     public void testChangePassword() {
         app.registration().loginAdmin();
         Users users = app.db().users();
+        if (users.size() == 0){
+            long now = System.currentTimeMillis();
+            String user = String.format("username%s", now);
+            String password = "password";
+            String email = String.format("username%s@localhost.localdomain", now);
+            app.registration().start(user, email);
+            List<MailMessage> mailMessages = app.mail().waitForMail(2, 60000);
+            String confirmationLink = findConfirmationLink(mailMessages, email);
+            app.registration().finish(confirmationLink, password);
+            users = app.db().users();
+        }
         UserData editedUser = users.iterator().next();
+        String usernameAdmin = app.getProperty("web.adminLogin");
+        while (editedUser.getUsername().equals(usernameAdmin)){
+            editedUser = users.iterator().next();
+        }
         int idEditedUser = editedUser.getId();
         app.registration().changePassword(editedUser.getUsername());
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 60000);
