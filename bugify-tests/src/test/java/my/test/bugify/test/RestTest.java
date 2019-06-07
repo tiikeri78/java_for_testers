@@ -9,12 +9,21 @@ import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Set;
 
-public class RestTest {
+public class RestTest extends TestBase{
+
+    @BeforeTest
+    public void checkStatusIssue() throws IOException {
+       if (isIssueOpen(1) == false){
+            System.out.println("Issue wasn't fixed");
+            return;
+        }
+    }
 
     @Test
     public void testCreateIssue() throws IOException {
