@@ -29,8 +29,8 @@ public class TestBase {
         Issue issue = newIssues.stream().filter(data -> Objects.equals(data.getId(), issueId)).findFirst().get();
 
         if (issue.getStatus().equals("resolved")) {
-            return true;
-        } else return false;
+            return false;
+        } else return true;
     }
 
     public void skipIfNotFixed(int issueId) throws IOException {
