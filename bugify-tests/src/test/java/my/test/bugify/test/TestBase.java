@@ -1,7 +1,9 @@
 package my.test.bugify.test;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import my.test.bugify.model.Issue;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.testng.SkipException;
@@ -16,17 +18,18 @@ public class TestBase {
 
     public boolean isIssueOpen(int issueId) throws IOException {
 
-        String issueStatus = getIssueStatus(issueId);
+        String issueStatus = getIssueData(issueId).getState_name();
 
-        if (issueStatus.equals("resolved")) {
+        if ((issueStatus.equals("resolved")) || (issueStatus.equals("closed")) || (issueStatus.equals("deleted"))) {
             return false;
         } else return true;
     }
 
-    private String getIssueStatus(int issueId) throws IOException {
+    private Issue getIssueData(int issueId) throws IOException {
         String json = getExecutor().execute(Request.Get("http://bugify.stqa.ru/api/issues/" + issueId + ".json")).returnContent().asString();
         JsonElement parsed = new JsonParser().parse(json);
-        return parsed.getAsJsonObject().get("state_name").getAsString();
+        JsonElement issues = parsed.getAsJsonObject().get("issues");
+        return new Gson().fromJson(issues, Issue.class);
     }
 
     public void skipIfNotFixed(int issueId) throws IOException {
