@@ -5,7 +5,6 @@ import com.google.gson.JsonParser;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.testng.SkipException;
-import org.testng.annotations.BeforeTest;
 
 import java.io.IOException;
 
@@ -15,15 +14,19 @@ public class TestBase {
         return Executor.newInstance().auth("288f44776e7bec4bf44fdfeb1e646490", "");
     }
 
-    @BeforeTest
     public boolean isIssueOpen(int issueId) throws IOException {
-        String json = getExecutor().execute(Request.Get("http://bugify.stqa.ru/api/issues/" + issueId + ".json")).returnContent().asString();
-        JsonElement parsed = new JsonParser().parse(json);
-        String issueStatus = parsed.getAsJsonObject().get("status").getAsString();
+
+        String issueStatus = getIssueStatus(issueId);
 
         if (issueStatus.equals("resolved")) {
             return false;
         } else return true;
+    }
+
+    private String getIssueStatus(int issueId) throws IOException {
+        String json = getExecutor().execute(Request.Get("http://bugify.stqa.ru/api/issues/" + issueId + ".json")).returnContent().asString();
+        JsonElement parsed = new JsonParser().parse(json);
+        return parsed.getAsJsonObject().get("state_name").getAsString();
     }
 
     public void skipIfNotFixed(int issueId) throws IOException {
